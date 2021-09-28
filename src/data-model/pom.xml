@@ -16,12 +16,12 @@
         <snapshotRepository>
             <id>nexus</id>
             <name>Nexus</name>
-            <url>http://nexus3.cicd.svc/repository/maven-snapshots</url>
+            <url>https://nexus-cicd.apps.sno.openshiftlabs.net/repository/maven-snapshots</url>
         </snapshotRepository>
         <repository>
             <id>nexus</id>
             <name>Nexus</name>
-            <url>http://nexus3.cicd.svc/repository/maven-release</url>
+            <url>https://nexus-cicd.apps.sno.openshiftlabs.net/repository/maven-release</url>
         </repository>
     </distributionManagement>
 
