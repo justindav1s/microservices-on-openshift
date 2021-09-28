@@ -5,7 +5,7 @@
 oc login https://${IP} -u ${USER}
 
 APP=sonarqube
-VERSION=7.9
+VERSION=8.9.2.46101
 REG_HOST=quay.io
 REG_USER=${QUAYIO_USER}
 REG_PASSWORD=${QUAYIO_PASSWORD}
