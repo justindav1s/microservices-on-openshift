@@ -16,7 +16,7 @@ RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
 RUN set -x \
     && cd /opt \
-    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+    && curl -o sonarqube.zip -fSL https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.2.46101.zip \
     && unzip sonarqube.zip \
     && mv sonarqube-$SONAR_VERSION sonarqube \
     && chown -R sonarqube:sonarqube sonarqube \
