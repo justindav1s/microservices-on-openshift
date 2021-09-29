@@ -19,7 +19,7 @@ node('maven') {
 
         stage('Build jar') {
             echo "Building version : ${version}"
-            sh "cat ../settings.xml"
+            // sh "cat ../settings.xml"
             sh "${mvn} clean package -DskipTests"
         }
 
