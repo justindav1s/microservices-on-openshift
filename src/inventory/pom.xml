@@ -11,7 +11,7 @@
 
 	<name>inventory</name>
 
-	<distributionManagement>
+	<!-- <distributionManagement>
 		<snapshotRepository>
 			<id>nexus</id>
 			<name>Nexus</name>
@@ -22,7 +22,7 @@
 			<name>Nexus</name>
 			<url>http://nexus3.cicd.svc/repository/maven-release</url>
 		</repository>
-	</distributionManagement>
+	</distributionManagement> -->
 
 	<properties>
 		<spring.boot.version>2.4.3</spring.boot.version>
