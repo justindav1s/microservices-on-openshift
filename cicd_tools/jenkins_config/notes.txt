@@ -1,0 +1,5 @@
+Error: container create failed: time="2021-10-08T11:28:43Z" level=error 
+msg="container_linux.go:367: starting container process caused: 
+process_linux.go:495: container init caused: 
+rootfs_linux.go:76: mounting \"/var/lib/kubelet/pods/6edbfb8e-6c3b-4832-ae7a-c487dab7615e/etc-hosts\" to rootfs at \"/etc/hosts\" caused: open /var/lib/containers/storage/overlay/3fdca02f254ba02bbf4ae8e0ea5e1f5be5f68fd8ad815cfdd25f0262b41ffa48/merged/etc/hosts:
+ read-only file system"
