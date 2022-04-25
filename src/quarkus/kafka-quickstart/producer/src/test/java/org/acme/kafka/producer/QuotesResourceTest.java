@@ -21,6 +21,6 @@ public class QuotesResourceTest {
                 .statusCode(200)
                 .extract().body()
                 .asString();
-        assertDoesNotThrow(() -> UUID.fromString(body));
+        assertDoesNotThrow(() -> UUID.fromString(body));        
     }
 }
