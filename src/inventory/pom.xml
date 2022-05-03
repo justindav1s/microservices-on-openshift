@@ -15,12 +15,12 @@
 		<snapshotRepository>
 			<id>nexus</id>
 			<name>Nexus</name>
-			<url>http://nexus-sonatype-nexus-service.cicd.svc/repository/maven-snapshots</url>
+			<!-- <url>http://nexus-sonatype-nexus-service.cicd.svc/repository/maven-snapshots</url> -->
 		</snapshotRepository>
 		<repository>
 			<id>nexus</id>
 			<name>Nexus</name>
-			<url>http://nexus-sonatype-nexus-service.cicd.svc/repository/maven-release</url>
+			<!-- <url>http://nexus-sonatype-nexus-service.cicd.svc/repository/maven-release</url> -->
 		</repository>
 	</distributionManagement>
 
