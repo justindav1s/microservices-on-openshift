@@ -1,0 +1,83 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: git-clone-build
+spec:
+  workspaces:
+  - name: shared-workspace
+  params:
+  - name: deployment-name
+    type: string
+    description: name of the deployment to be patched
+  - name: git-url
+    type: string
+    description: url of the git repo for the code of deployment
+  - name: git-revision
+    type: string
+    description: revision to be used from repo of the code for deployment
+    default: master
+  - name: APP_PROFILE
+    description: >-
+      The application profile to use for building the application. In this example it should be either:
+        * quarkus
+        * springboot    
+  - name: CONTEXT_DIR
+    type: string
+    description: folder in git repo where source is
+  - name: command
+    type: string
+    default: 'ls -ltr'    
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: $(params.git-url)
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+    - name: revision
+      value: $(params.git-revision)
+  - name: list-filesystem
+    taskRef:
+      name: bash
+      kind: Task
+    workspaces:
+    - name: storage
+      workspace: shared-workspace
+    params:
+    - name: command
+      value: $(params.command)
+    runAfter:
+      - fetch-repository    
+  - name: build-java-app
+    taskRef:
+      name: maven
+      kind: ClusterTask
+    runAfter:
+      - list-filesystem
+    params:
+      - name: CONTEXT_DIR
+        value: $(params.CONTEXT_DIR)
+      - name: GOALS
+        value:
+          - -U 
+          - -q 
+          - -s ../settings.xml 
+          - -Dmaven.wagon.http.ssl.insecure=true 
+          - -Dmaven.wagon.http.ssl.allowall=true
+          - -B
+          - '-DskipTests'
+          - 'clean'
+          - 'deploy'
+    workspaces:
+      - name: maven-settings
+        workspace: shared-workspace
+      - name: source
+        workspace: shared-workspace            

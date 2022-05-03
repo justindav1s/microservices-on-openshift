@@ -95,3 +95,6 @@ oc get secret kafka-user -n kafka-cluster -o jsonpath='{.data.user\.password}' |
 export PASSWORD=`cat user.password`
 keytool -import -trustcacerts -file ca.crt -keystore user-truststore.jks -storepass $PASSWORD
 keytool -importkeystore -srckeystore user.p12 -srcstoretype pkcs12 -destkeystore user-keystore.jks -deststoretype jks
+
+
+https://github.com/quarkusio/quarkus/blob/main/integration-tests/kafka-streams/src/main/resources/application.properties
