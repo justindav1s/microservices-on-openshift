@@ -5,6 +5,7 @@ metadata:
 spec:
   workspaces:
   - name: shared-workspace
+  - name: maven-settings
   params:
   - name: deployment-name
     type: string
@@ -46,14 +47,21 @@ spec:
       value: $(params.git-revision)
   - name: list-filesystem
     taskRef:
-      name: bash
+      name: run-script
       kind: Task
     workspaces:
     - name: storage
       workspace: shared-workspace
     params:
-    - name: command
-      value: $(params.command)
+    - name: script
+      value: |
+        #!/usr/bin/env bash
+        set -xe
+        echo "Script running in $(workspaces.storage.path)"
+        chmod -R 777 $(workspaces.storage.path)
+        ls -ltr $(workspaces.storage.path)
+        echo "$(workspaces.storage.path)/src/settings.xml : "
+        cat $(workspaces.storage.path)/src/settings.xml 
     runAfter:
       - fetch-repository    
   - name: build-java-app
@@ -67,9 +75,9 @@ spec:
         value: $(params.CONTEXT_DIR)
       - name: GOALS
         value:
-          - -U 
-          - -q 
-          - -s ../settings.xml 
+          # - -U 
+          # - -X
+          - -s $(workspaces.source.path)/src/settings.xml 
           - -Dmaven.wagon.http.ssl.insecure=true 
           - -Dmaven.wagon.http.ssl.allowall=true
           - -B
@@ -78,6 +86,6 @@ spec:
           - 'deploy'
     workspaces:
       - name: maven-settings
-        workspace: shared-workspace
+        workspace: maven-settings
       - name: source
         workspace: shared-workspace            

@@ -15,22 +15,24 @@ oc new-project $PROJECT 2> /dev/null
 done
 
 # oc apply -f git-clone-build.yaml
-oc apply -f bash.yaml
+oc create configmap custom-maven-settings --from-file=../src/settings.xml
+oc apply -f run-script-task.yaml
 oc apply -f git-clone.yaml
 oc apply -f git-clone-build.yaml
 
-tkn pipeline start git-clone \
-    -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
-    -p deployment-name=test \
-    -p git-url=https://github.com/justindav1s/microservices-on-openshift.git \
-    -p git-revision=master \
-    -p command='ls -ltr' \
-    --use-param-defaults \
-    --showlog 
+# tkn pipeline start git-clone \
+#     -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
+#     -p deployment-name=test \
+#     -p git-url=https://github.com/justindav1s/microservices-on-openshift.git \
+#     -p git-revision=master \
+#     -p command='ls -ltr' \
+#     --use-param-defaults \
+#     --showlog 
 
 
 tkn pipeline start git-clone-build \
     -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
+    -w name=maven-settings,config=custom-maven-settings \
     -p deployment-name=pipeline-test \
     -p git-url=https://github.com/justindav1s/microservices-on-openshift.git \
     -p APP_PROFILE='' \
