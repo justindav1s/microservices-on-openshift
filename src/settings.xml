@@ -53,6 +53,7 @@
             <properties>
                 <altSnapshotDeploymentRepository>nexus::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altSnapshotDeploymentRepository>
                 <altReleaseDeploymentRepository>nexus::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altReleaseDeploymentRepository>
+                <altDeploymentRepository>nexus::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altDeploymentRepository>
            </properties>
         </profile>
     </profiles>
