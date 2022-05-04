@@ -51,8 +51,8 @@
             </pluginRepositories>
             <id>nexus</id>
             <properties>
-                <altSnapshotDeploymentRepository>snapshots::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altSnapshotDeploymentRepository>
-                <altReleaseDeploymentRepository>releases::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>nexus::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altSnapshotDeploymentRepository>
+                <altReleaseDeploymentRepository>nexus::default::http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-public</altReleaseDeploymentRepository>
            </properties>
         </profile>
     </profiles>
