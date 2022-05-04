@@ -64,7 +64,7 @@ spec:
         cat $(workspaces.storage.path)/src/settings.xml 
     runAfter:
       - fetch-repository    
-  - name: build-java-app
+  - name: test-java-app
     taskRef:
       name: maven
       kind: ClusterTask
@@ -75,9 +75,28 @@ spec:
         value: $(params.CONTEXT_DIR)
       - name: GOALS
         value:
-          # - -U 
-          # - -X
-          - -s $(workspaces.source.path)/src/settings.xml 
+          - -U 
+          - -Dspring.profiles.active=dev
+          - -B
+          - 'clean'
+          - 'test'
+    workspaces:
+      - name: maven-settings
+        workspace: maven-settings
+      - name: source
+        workspace: shared-workspace
+  - name: build-java-app
+    taskRef:
+      name: maven
+      kind: ClusterTask
+    runAfter:
+      - test-java-app
+    params:
+      - name: CONTEXT_DIR
+        value: $(params.CONTEXT_DIR)
+      - name: GOALS
+        value:
+          - -U 
           - -Dmaven.wagon.http.ssl.insecure=true 
           - -Dmaven.wagon.http.ssl.allowall=true
           - -B
@@ -88,4 +107,4 @@ spec:
       - name: maven-settings
         workspace: maven-settings
       - name: source
-        workspace: shared-workspace            
+        workspace: shared-workspace         
