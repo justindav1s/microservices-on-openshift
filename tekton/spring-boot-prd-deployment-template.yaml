@@ -35,7 +35,7 @@ objects:
           - env:
               - name: SPRING_PROFILES_ACTIVE
                 value: "${SPRING_PROFILES_ACTIVE}"
-            image: ' '
+            image: ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
             imagePullPolicy: Always
             ports:
             - containerPort: 8080
@@ -88,7 +88,11 @@ parameters:
   - description: The name for the application.
     name: APPLICATION_NAME
     required: true
-    value: "basket"
+    value: "inventory"
+  - description: The name for the application image.
+    name: IMAGE_REPO
+    required: true
+    value: "quay.io/justindav1s"    
   - description: The name for the application image.
     name: IMAGE_NAME
     required: true
@@ -107,5 +111,5 @@ parameters:
   - description: The ServiceAccount name.
     name: SERVICEACCOUNT_NAME
     required: true
-    value: "basket-prd-sa"
+    value: "inventory-prd-sa"
 

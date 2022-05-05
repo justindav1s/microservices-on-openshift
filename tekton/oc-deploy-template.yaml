@@ -25,6 +25,11 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
+          oc new-app -f tekton/service-template.yaml \
+            -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
+            -p SERVICE_NAME=$(params.IMAGE_NAME) \
+            -p SERVICEACCOUNT_NAME=$(params.SERVICEACCOUNT_NAME)
+
           oc new-app -f tekton/spring-boot-prd-deployment-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
             -p IMAGE_NAME=$(params.IMAGE_NAME) \

@@ -30,6 +30,11 @@ oc apply -f oc-task.yaml
 oc apply -f oc-deploy-template.yaml
 oc apply -f build-test-deploy.yaml
 
+SPRING_PROFILES_ACTIVE=prd
+APP=inventory
+oc create configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --from-file=../src/inventory/src/main/resources/config.${SPRING_PROFILES_ACTIVE}.properties -n ${PROJECT}
+
+
 tkn pipeline start build-test-deploy \
     -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
     -w name=maven-settings,config=custom-maven-settings \

@@ -127,8 +127,10 @@ spec:
     params:
       - name: APPLICATION_NAME
         value: inventory
-      - name: IMAGE_NAME
-        value: quay.io/justindav1s/inventory-tekton
+      - name: IMAGE_REPO
+        value: quay.io/justindav1s
+       - name: IMAGE_NAME
+        value: inventory-tekton
       - name: IMAGE_TAG
         value: latest
       - name: SPRING_PROFILES_ACTIVE
