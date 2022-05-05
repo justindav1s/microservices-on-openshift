@@ -14,29 +14,28 @@ while [ $? \> 0 ]; do
 oc new-project $PROJECT 2> /dev/null
 done
 
-# oc apply -f git-clone-build.yaml
+oc create secret docker-registry quay-dockercfg \
+  --docker-server=${QUAYIO_HOST} \
+  --docker-username=${QUAYIO_USER} \
+  --docker-password=${QUAYIO_PASSWORD} \
+  --docker-email=${QUAYIO_EMAIL} \
+  -n ${PROJECT}
+
+oc secrets link pipeline quay-dockercfg -n ${PROJECT}
+oc secrets link deployer quay-dockercfg --for=pull -n ${PROJECT}
+
 oc create configmap custom-maven-settings --from-file=../src/settings.xml
 oc apply -f run-script-task.yaml
-oc apply -f git-clone.yaml
-oc apply -f git-clone-build.yaml
+oc apply -f oc-task.yaml
+oc apply -f oc-deploy-template.yaml
+oc apply -f build-test-deploy.yaml
 
-# tkn pipeline start git-clone \
-#     -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
-#     -p deployment-name=test \
-#     -p git-url=https://github.com/justindav1s/microservices-on-openshift.git \
-#     -p git-revision=master \
-#     -p command='ls -ltr' \
-#     --use-param-defaults \
-#     --showlog 
-
-
-tkn pipeline start git-clone-build \
+tkn pipeline start build-test-deploy \
     -w name=shared-workspace,volumeClaimTemplateFile=pvc.yaml \
     -w name=maven-settings,config=custom-maven-settings \
-    -p deployment-name=pipeline-test \
+    -p deployment-name=inventory-build-test-deploy \
     -p git-url=https://github.com/justindav1s/microservices-on-openshift.git \
     -p APP_PROFILE='' \
     -p CONTEXT_DIR='src/inventory' \
-    -p command='ls -ltr' \
     --use-param-defaults \
     --showlog

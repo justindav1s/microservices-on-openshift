@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-template
+spec:
+  workspaces:
+  - name: source
+  params:
+    - name: APPLICATION_NAME
+      type: string
+    - name: IMAGE_NAME
+      type: string
+    - name: IMAGE_TAG
+      type: string
+    - name: SPRING_PROFILES_ACTIVE
+      type: string
+    - name: VERSION_LABEL
+      type: string
+    - name: SERVICEACCOUNT_NAME
+      type: string
+  steps:
+    - name: apply
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+      workingDir: /workspace/source
+      command: ["/bin/bash", "-c"]
+      args:
+        - |-
+          oc new-app -f tekton/spring-boot-prd-deployment-template.yaml \
+            -p APPLICATION_NAME=${APP} \
+            -p IMAGE_NAME=${IMAGE_NAME} \
+            -p IMAGE_TAG=${IMAGE_TAG} \
+            -p SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
+            -p VERSION_LABEL=${VERSION_LABEL} \
+            -p SERVICEACCOUNT_NAME=${SERVICEACCOUNT_NAME}
+          echo -----------------------------------

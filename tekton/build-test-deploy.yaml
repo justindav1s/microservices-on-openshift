@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: git-clone-build
+  name: build-test-deploy
 spec:
   workspaces:
   - name: shared-workspace
@@ -24,10 +24,7 @@ spec:
         * springboot    
   - name: CONTEXT_DIR
     type: string
-    description: folder in git repo where source is
-  - name: command
-    type: string
-    default: 'ls -ltr'    
+    description: folder in git repo where source is  
   tasks:
   - name: fetch-repository
     taskRef:
@@ -60,8 +57,6 @@ spec:
         echo "Script running in $(workspaces.storage.path)"
         chmod -R 777 $(workspaces.storage.path)
         ls -ltr $(workspaces.storage.path)
-        echo "$(workspaces.storage.path)/src/settings.xml : "
-        cat $(workspaces.storage.path)/src/settings.xml 
     runAfter:
       - fetch-repository    
   - name: test-java-app
@@ -108,18 +103,40 @@ spec:
         workspace: maven-settings
       - name: source
         workspace: shared-workspace
-  - name: buildah-image
+  - name: build-image
     taskRef:
       name: buildah
+      kind: ClusterTask
     runAfter:
       - build-java-app
     params:
       - name: IMAGE
-        value: image-registry.openshift-image-registry.svc:5000/tekton-test/inventory
-      - name: CONTEXT_DIR
+        value: quay.io/justindav1s/inventory-tekton
+      - name: CONTEXT
         value: $(params.CONTEXT_DIR) 
       - name: TLSVERIFY
         value: 'false'
     workspaces:
       - name: source
-        workspace: shared-workspace                
+        workspace: shared-workspace
+  - name: deploy-image
+    taskRef:
+      name: deploy-template
+    runAfter:
+      - build-image
+    params:
+      - name: APPLICATION_NAME
+        value: inventory
+      - name: IMAGE_NAME
+        value: quay.io/justindav1s/inventory-tekton
+      - name: IMAGE_TAG
+        value: latest
+      - name: SPRING_PROFILES_ACTIVE
+        value: v1
+      - name: VERSION_LABEL
+        value: v1
+      - name: SERVICEACCOUNT_NAME
+        value: inventory-prd-sa
+    workspaces:
+      - name: source
+        workspace: shared-workspace
