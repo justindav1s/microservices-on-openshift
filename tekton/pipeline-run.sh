@@ -5,6 +5,8 @@ PROJECT=tekton-test
 APP=basket
 PROFILE=dev
 
+oc delete configmap ${APP}-${PROFILE}-config
+
 oc create configmap ${APP}-${PROFILE}-config \
     --from-file=../src/${APP}/src/main/resources/config.${PROFILE}.properties \
     -n ${PROJECT}
