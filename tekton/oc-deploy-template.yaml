@@ -26,10 +26,10 @@ spec:
       args:
         - |-
           oc new-app -f tekton/spring-boot-prd-deployment-template.yaml \
-            -p APPLICATION_NAME=${APP} \
-            -p IMAGE_NAME=${IMAGE_NAME} \
-            -p IMAGE_TAG=${IMAGE_TAG} \
-            -p SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
-            -p VERSION_LABEL=${VERSION_LABEL} \
-            -p SERVICEACCOUNT_NAME=${SERVICEACCOUNT_NAME}
+            -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
+            -p IMAGE_NAME=$(params.IMAGE_NAME) \
+            -p IMAGE_TAG=$(params.IMAGE_TAG) \
+            -p SPRING_PROFILES_ACTIVE=$(params.SPRING_PROFILES_ACTIVE) \
+            -p VERSION_LABEL=$(params.VERSION_LABEL) \
+            -p SERVICEACCOUNT_NAME=$(params.SERVICEACCOUNT_NAME)
           echo -----------------------------------
