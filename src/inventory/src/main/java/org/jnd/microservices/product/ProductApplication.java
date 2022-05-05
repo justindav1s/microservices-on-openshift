@@ -41,7 +41,7 @@ public class ProductApplication extends SpringBootServletInitializer {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
-        return "OK";
+        return "PRODUCT OK";
     }
 
     @PostConstruct
