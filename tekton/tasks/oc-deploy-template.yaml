@@ -8,6 +8,8 @@ spec:
   params:
     - name: APPLICATION_NAME
       type: string
+    - name: IMAGE_REPO
+      type: string
     - name: IMAGE_NAME
       type: string
     - name: IMAGE_TAG
@@ -32,6 +34,7 @@ spec:
 
           oc new-app -f tekton/spring-boot-prd-deployment-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
+            -p IMAGE_REPO=$(params.IMAGE_REPO) \
             -p IMAGE_NAME=$(params.IMAGE_NAME) \
             -p IMAGE_TAG=$(params.IMAGE_TAG) \
             -p SPRING_PROFILES_ACTIVE=$(params.SPRING_PROFILES_ACTIVE) \

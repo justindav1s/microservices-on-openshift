@@ -1,30 +1,42 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-test-deploy
+  name: maven-build-test-deploy
 spec:
   workspaces:
   - name: shared-workspace
   - name: maven-settings
   params:
-  - name: deployment-name
+  - name: APP_NAME
     type: string
-    description: name of the deployment to be patched
-  - name: git-url
+    default: inventory
+    description: name of the appto be deployed
+  - name: GIT_REPO
     type: string
     description: url of the git repo for the code of deployment
-  - name: git-revision
+  - name: GIT_BRANCH
     type: string
     description: revision to be used from repo of the code for deployment
     default: master
   - name: APP_PROFILE
-    description: >-
-      The application profile to use for building the application. In this example it should be either:
-        * quarkus
-        * springboot    
+    description: The Spring Active Profile to use for building and testing the application.
+    default: dev       
   - name: CONTEXT_DIR
     type: string
-    description: folder in git repo where source is  
+    default: ''
+    description: folder in git repo where source is
+  - name: IMAGE_REPO
+    type: string
+    description: repo for container image
+    default: quay.io/justindav1s
+  - name: IMAGE_TAG
+    type: string
+    description: tag for container image
+    default: latest
+  - name: VERSION_LABEL
+    type: string
+    description: version label for pod 
+    default: v1
   tasks:
   - name: fetch-repository
     taskRef:
@@ -35,13 +47,13 @@ spec:
       workspace: shared-workspace
     params:
     - name: url
-      value: $(params.git-url)
+      value: $(params.GIT_REPO)
     - name: subdirectory
       value: ""
     - name: deleteExisting
       value: "true"
     - name: revision
-      value: $(params.git-revision)
+      value: $(params.GIT_BRANCH)
   - name: list-filesystem
     taskRef:
       name: run-script
@@ -71,7 +83,8 @@ spec:
       - name: GOALS
         value:
           - -U 
-          - -Dspring.profiles.active=dev
+          - -q
+          - -Dspring.profiles.active=$(params.APP_PROFILE)
           - -B
           - 'clean'
           - 'test'
@@ -91,7 +104,8 @@ spec:
         value: $(params.CONTEXT_DIR)
       - name: GOALS
         value:
-          - -U 
+          - -U
+          - -q 
           - -Dmaven.wagon.http.ssl.insecure=true 
           - -Dmaven.wagon.http.ssl.allowall=true
           - -B
@@ -111,7 +125,7 @@ spec:
       - build-java-app
     params:
       - name: IMAGE
-        value: quay.io/justindav1s/inventory-tekton
+        value: $(params.IMAGE_REPO)/$(params.APP_NAME)
       - name: CONTEXT
         value: $(params.CONTEXT_DIR) 
       - name: TLSVERIFY
@@ -126,19 +140,19 @@ spec:
       - build-image
     params:
       - name: APPLICATION_NAME
-        value: inventory
+        value: $(params.APP_NAME)
       - name: IMAGE_REPO
-        value: quay.io/justindav1s
-       - name: IMAGE_NAME
-        value: inventory-tekton
+        value: $(params.IMAGE_REPO)
+      - name: IMAGE_NAME
+        value: $(params.APP_NAME)
       - name: IMAGE_TAG
-        value: latest
+        value: $(params.IMAGE_TAG)
       - name: SPRING_PROFILES_ACTIVE
-        value: v1
+        value: $(params.APP_PROFILE)
       - name: VERSION_LABEL
-        value: v1
+        value: $(params.VERSION_LABEL)
       - name: SERVICEACCOUNT_NAME
-        value: inventory-prd-sa
+        value: $(params.APP_NAME)-$(params.APP_PROFILE)-sa
     workspaces:
       - name: source
         workspace: shared-workspace
