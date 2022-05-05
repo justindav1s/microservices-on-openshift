@@ -34,6 +34,6 @@ public class BasketApplication extends SpringBootServletInitializer {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
-        return "OK";
+        return "BASKET OK";
     }
 }

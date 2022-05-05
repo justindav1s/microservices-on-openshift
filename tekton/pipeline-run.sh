@@ -2,7 +2,7 @@
 
 
 PROJECT=tekton-test
-APP=user
+APP=basket
 PROFILE=dev
 
 oc create configmap ${APP}-${PROFILE}-config \
