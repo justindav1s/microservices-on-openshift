@@ -9,6 +9,8 @@ oc create configmap ${APP}-${PROFILE}-config \
     --from-file=../src/${APP}/src/main/resources/config.${PROFILE}.properties \
     -n ${PROJECT}
 
+oc label configmap ${APP}-${PROFILE}-config app=${APP}
+
 cat << EOF > pipelines/${APP}-pipeline-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim

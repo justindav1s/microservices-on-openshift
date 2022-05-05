@@ -27,6 +27,8 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
+          oc delete sa,deployment,service,route -l app=$(params.APPLICATION_NAME)
+
           oc new-app -f tekton/ocp-templates/ingress-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
             -p SERVICE_NAME=$(params.IMAGE_NAME) \
