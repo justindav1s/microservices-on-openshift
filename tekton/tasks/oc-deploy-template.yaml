@@ -32,7 +32,7 @@ spec:
             -p SERVICE_NAME=$(params.IMAGE_NAME) \
             -p SERVICEACCOUNT_NAME=$(params.SERVICEACCOUNT_NAME)
 
-          oc new-app -f tekton/ocp-templates/spring-boot-prd-deployment-template.yaml \
+          oc new-app -f tekton/ocp-templates/spring-boot-deployment-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
             -p IMAGE_REPO=$(params.IMAGE_REPO) \
             -p IMAGE_NAME=$(params.IMAGE_NAME) \

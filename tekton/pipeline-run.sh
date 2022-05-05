@@ -22,6 +22,8 @@ oc create secret docker-registry quay-dockercfg \
   --docker-email=${QUAYIO_EMAIL} \
   -n ${PROJECT}
 
+sleep 1
+
 oc secrets link pipeline quay-dockercfg -n ${PROJECT}
 oc secrets link deployer quay-dockercfg --for=pull -n ${PROJECT}
 
