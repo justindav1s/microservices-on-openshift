@@ -27,7 +27,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
-          oc new-app -f tekton/ocp-templates/service-template.yaml \
+          oc new-app -f tekton/ocp-templates/ingress-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
             -p SERVICE_NAME=$(params.IMAGE_NAME) \
             -p SERVICEACCOUNT_NAME=$(params.SERVICEACCOUNT_NAME)

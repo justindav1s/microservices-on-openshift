@@ -48,7 +48,7 @@ spec:
 EOF
 
 tkn pipeline start maven-build-test-deploy \
-    -w name=shared-workspace,volumeClaimTemplateFile=${APP}-pipeline-pvc.yaml \
+    -w name=shared-workspace,volumeClaimTemplateFile=pipelines/${APP}-pipeline-pvc.yaml \
     -w name=maven-settings,config=custom-maven-settings \
     -p APP_NAME=${APP} \
     -p GIT_REPO=https://github.com/justindav1s/microservices-on-openshift.git \
