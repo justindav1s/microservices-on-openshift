@@ -47,7 +47,7 @@ public class UserApplication extends SpringBootServletInitializer {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
-        return "OK 1";
+        return "USER OK";
     }
 
 }
