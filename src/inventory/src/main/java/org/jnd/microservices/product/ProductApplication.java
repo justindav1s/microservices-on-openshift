@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
 
 @ComponentScan
 @SpringBootApplication(scanBasePackages={"org.jnd"})
@@ -26,6 +29,7 @@ import javax.annotation.PostConstruct;
 @RestController
 @Configuration
 @EnableAutoConfiguration
+@OpenAPIDefinition(info = @Info(title = "Product API", version = "1.0", description = "Product Information"))
 public class ProductApplication extends SpringBootServletInitializer {
 
     private Log log = LogFactory.getLog(ProductController.class);

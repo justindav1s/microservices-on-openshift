@@ -1,0 +1,9 @@
+apiVersion: capabilities.3scale.net/v1beta1
+kind: OpenAPI
+metadata:
+  name: inventory-openapi
+  namespace: 3scale
+spec:
+  openapiRef:
+    url: https://inventory-tekton-test.apps.sno.openshiftlabs.net/v3/api-docs
+  productSystemName: inventory-openapi

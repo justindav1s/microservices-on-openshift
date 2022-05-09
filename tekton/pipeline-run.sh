@@ -2,7 +2,7 @@
 
 
 PROJECT=tekton-test
-APP=basket
+APP=inventory
 PROFILE=dev
 
 oc delete configmap ${APP}-${PROFILE}-config
