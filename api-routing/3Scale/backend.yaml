@@ -1,0 +1,15 @@
+apiVersion: capabilities.3scale.net/v1beta1
+kind: Backend
+metadata:
+  name: amazin-api-inventory-backend
+  namespace: 3scale
+spec:
+  description: Inventory Information
+  metrics:
+    hits:
+      description: Number of API hits
+      friendlyName: Hits
+      unit: hit
+  name: Amazin API Inventory backend
+  privateBaseURL: 'https://inventory-tekton-test.apps.sno.openshiftlabs.net'
+  systemName: amazin-api-inventory-backend

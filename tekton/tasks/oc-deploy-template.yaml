@@ -27,8 +27,9 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
+          echo -----------CLEANUP------------------------
           oc delete sa,deployment,service,route -l app=$(params.APPLICATION_NAME)
-
+          echo -----------DEPLOY------------------------
           oc new-app -f tekton/ocp-templates/ingress-template.yaml \
             -p APPLICATION_NAME=$(params.APPLICATION_NAME) \
             -p SERVICE_NAME=$(params.IMAGE_NAME) \
@@ -42,4 +43,4 @@ spec:
             -p SPRING_PROFILES_ACTIVE=$(params.SPRING_PROFILES_ACTIVE) \
             -p VERSION_LABEL=$(params.VERSION_LABEL) \
             -p SERVICEACCOUNT_NAME=$(params.SERVICEACCOUNT_NAME)
-          echo -----------------------------------
+          echo -------------DONE-------------------
