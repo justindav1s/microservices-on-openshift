@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+cache-control: no-store, must-revalidate, max-age=0
+set-cookie: AUTH_SESSION_ID=f0b134e8-aeba-4454-ba8d-f72019131ce9.keycloak-0; Version=1; Path=/auth/realms/3Scale/; SameSite=None; Secure; HttpOnly
+set-cookie: AUTH_SESSION_ID_LEGACY=f0b134e8-aeba-4454-ba8d-f72019131ce9.keycloak-0; Version=1; Path=/auth/realms/3Scale/; HttpOnly
+set-cookie: KC_RESTART=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1YjkzNWI1MC01MWJmLTQyNjMtOGNmOC1lMzk1NjM3YzdjMjAifQ.eyJjaWQiOiI3NzM0ZWJkMCIsInB0eSI6Im9wZW5pZC1jb25uZWN0IiwicnVyaSI6Imh0dHA6Ly8xMjcuMC4wLjE6OTA5MC9nZXRjb2RlIiwiYWN0IjoiQVVUSEVOVElDQVRFIiwibm90ZXMiOnsic2NvcGUiOiJvcGVuaWQiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLXNzby5hcHBzLnNuby5vcGVuc2hpZnRsYWJzLm5ldC9hdXRoL3JlYWxtcy8zU2NhbGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSIsInJlZGlyZWN0X3VyaSI6Imh0dHA6Ly8xMjcuMC4wLjE6OTA5MC9nZXRjb2RlIn19.pEZHkS3j36-0aPhNXMJIxJ1SiHChzHpK5zR3nuxmrJk; Version=1; Path=/auth/realms/3Scale/; HttpOnly
+x-xss-protection: 1; mode=block
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+content-security-policy: frame-src 'self'; frame-ancestors 'self'; object-src 'none';
+date: Wed, 11 May 2022 13:30:29 GMT
+x-robots-tag: none
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+content-type: text/html;charset=utf-8
+content-length: 5030
+content-language: en
+set-cookie: 6a4ba2fbd57fbf453c57ac05e9447551=18006a394d912196c7296330409fe1cd; path=/; HttpOnly; Secure; SameSite=None
+

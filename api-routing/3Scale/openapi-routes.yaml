@@ -1,15 +1,3 @@
-apiVersion: capabilities.3scale.net/v1beta1
-kind: OpenAPI
-metadata:
-  name: product-openapi
-  namespace: 3scale
-spec:
-  openapiRef:
-    url: https://inventory-tekton-test.apps.sno.openshiftlabs.net/v3/api-docs
-  productSystemName: product-openapi
-  stagingPublicBaseURL: 'https://product-staging-3scale.apps.sno.openshiftlabs.net'
-  productionPublicBaseURL: 'https://product-3scale.apps.sno.openshiftlabs.net' 
----
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
@@ -44,4 +32,4 @@ spec:
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
-  wildcardPolicy: None     
+  wildcardPolicy: None  

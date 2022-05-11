@@ -1,22 +1,22 @@
 apiVersion: capabilities.3scale.net/v1beta1
 kind: OpenAPI
 metadata:
-  name: product-openapi
+  name: sso-product-openapi2
   namespace: 3scale
 spec:
   openapiRef:
     url: https://inventory-tekton-test.apps.sno.openshiftlabs.net/v3/api-docs
-  productSystemName: product-openapi
-  stagingPublicBaseURL: 'https://product-staging-3scale.apps.sno.openshiftlabs.net'
-  productionPublicBaseURL: 'https://product-3scale.apps.sno.openshiftlabs.net' 
+  productSystemName: sso-product-openapi
+  stagingPublicBaseURL: 'https://sso-product-staging-3scale.apps.sno.openshiftlabs.net'
+  productionPublicBaseURL: 'https://sso-product-3scale.apps.sno.openshiftlabs.net' 
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: product-staging
+  name: sso-product-staging
   namespace: 3scale
 spec:
-  host: product-staging-3scale.apps.sno.openshiftlabs.net
+  host: sso-product-staging-3scale.apps.sno.openshiftlabs.net
   to:
     kind: Service
     name: apicast-staging
@@ -31,10 +31,10 @@ spec:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: product-production
+  name: sso-product-production
   namespace: 3scale
 spec:
-  host: product-3scale.apps.sno.openshiftlabs.net
+  host: sso-product-3scale.apps.sno.openshiftlabs.net
   to:
     kind: Service
     name: apicast-production
