@@ -31,7 +31,7 @@ RESPONSE=$(curl -vk -D headers.txt \
     "${KEYCLOAK}/auth/realms/${REALM}/protocol/openid-connect/auth?${GET_BODY}")
 
 echo RESPONSE=$RESPONSE
-LOC=$(grep Location headers.txt)
+LOC=$(grep location headers.txt)
 #rm -rf headers.txt
 CODE=`echo ${LOC} | awk -F'[=&]' '{print $4}' | tr -cd "[:print:]\n"`
 
@@ -55,21 +55,21 @@ PART2_BASE64=$(padBase64 ${PART2_BASE64})
 echo "ACCESS TOKEN"
 echo ${PART2_BASE64} | base64 -D | jq .
 
-echo
-ACCESS_TOKEN=$(echo ${RESPONSE} | jq -r .refresh_token)
-PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
-PART2_BASE64=$(padBase64 ${PART2_BASE64})
-echo "REFRESH TOKEN"
-echo ${PART2_BASE64} | base64 -D | jq .
+# echo
+# ACCESS_TOKEN=$(echo ${RESPONSE} | jq -r .refresh_token)
+# PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
+# PART2_BASE64=$(padBase64 ${PART2_BASE64})
+# echo "REFRESH TOKEN"
+# echo ${PART2_BASE64} | base64 -D | jq .
 
-echo
-ACCESS_TOKEN=$(echo ${RESPONSE} | jq -r .id_token)
-PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
-PART2_BASE64=$(padBase64 ${PART2_BASE64})
-echo "ID TOKEN"
-echo ${PART2_BASE64} | base64 -D | jq .
+# echo
+# ACCESS_TOKEN=$(echo ${RESPONSE} | jq -r .id_token)
+# PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
+# PART2_BASE64=$(padBase64 ${PART2_BASE64})
+# echo "ID TOKEN"
+# echo ${PART2_BASE64} | base64 -D | jq .
 
-curl -vk \
-    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-    -H "X-3scale-proxy-secret-token: Shared_secret_sent_from_proxy_to_API_backend_dd585619e2c4c67a" \
-    "https://sso-product-staging-3scale.apps.sno.openshiftlabs.net:443/products/all"
+# curl -vk \
+#     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+#     -H "X-3scale-proxy-secret-token: Shared_secret_sent_from_proxy_to_API_backend_dd585619e2c4c67a" \
+#     "https://sso-product-staging-3scale.apps.sno.openshiftlabs.net:443/products/all"

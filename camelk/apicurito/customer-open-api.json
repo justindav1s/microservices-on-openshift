@@ -1,0 +1,130 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Customer API",
+    "version": "1.0.0",
+    "description": "A brand new API with no content.  Go nuts!"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/customers": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful response - returns an array of `Customer` entities.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          }
+        },
+        "operationId": "getcustomers",
+        "summary": "List All customers",
+        "description": "Gets a list of all `Customer` entities."
+      },
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "description": "A new `Customer` to be created.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            },
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful response."
+          }
+        },
+        "operationId": "createCustomer",
+        "summary": "Create a Customer",
+        "description": "Creates a new instance of a `Customer`."
+      }
+    },
+    "/customers/{customerId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful response - returns a single `Customer`.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        },
+        "operationId": "getCustomer",
+        "summary": "Get a Customer",
+        "description": "Gets the details of a single instance of a `Customer`."
+      },
+      "put": {
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Updated `Customer` information.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            },
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful response."
+          }
+        },
+        "operationId": "updateCustomer",
+        "summary": "Update a Customer",
+        "description": "Updates an existing `Customer`."
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Successful response."
+          }
+        },
+        "operationId": "deleteCustomer",
+        "summary": "Delete a Customer",
+        "description": "Deletes an existing `Customer`."
+      },
+      "parameters": [
+        {
+          "name": "customerId",
+          "description": "A unique identifier for a `Customer`.",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Customer": {
+      "title": "Root Type for Customer",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstname": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": 1,
+        "firstname": "John"
+      }
+    }
+  }
+}
