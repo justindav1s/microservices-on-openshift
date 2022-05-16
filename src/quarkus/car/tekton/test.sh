@@ -31,7 +31,7 @@ spec:
       storage: 500Mi
 EOF
 
-
+oc apply -f pipelines/maven-build-test-deploy.yaml
 
 tkn pipeline start maven-build-test-deploy \
     -w name=shared-workspace,volumeClaimTemplateFile=${APP}-${PROFILE}-pipeline-pvc.yaml \

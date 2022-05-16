@@ -6,6 +6,7 @@ spec:
   workspaces:
   - name: shared-workspace
   - name: maven-settings
+  - name: truststore
   params:
   - name: APP_NAME
     type: string
@@ -61,6 +62,8 @@ spec:
     workspaces:
     - name: storage
       workspace: shared-workspace
+    - name: truststore
+      workspace: truststore
     params:
     - name: script
       value: |
@@ -69,9 +72,10 @@ spec:
         echo "Script running in $(workspaces.storage.path)"
         chmod -R 777 $(workspaces.storage.path)
         ls -ltr $(workspaces.storage.path)
+        ls -ltr $(workspaces.truststore.path)
     runAfter:
-      - fetch-repository    
-  - name: install-deps
+      - fetch-repository
+  - name: test-java-app
     taskRef:
       name: maven
       kind: ClusterTask
@@ -84,27 +88,7 @@ spec:
         value:
           - -U 
           - -q
-          - -B
-          - 'install'
-    workspaces:
-      - name: maven-settings
-        workspace: maven-settings
-      - name: source
-        workspace: shared-workspace
-  - name: test-java-app
-    taskRef:
-      name: maven
-      kind: ClusterTask
-    runAfter:
-      - install-deps
-    params:
-      - name: CONTEXT_DIR
-        value: $(params.CONTEXT_DIR)
-      - name: GOALS
-        value:
-          - -U 
-          - -q
-          - -Dspring.profiles.active=$(params.APP_PROFILE)
+          - -Dkafka.ssl.truststore.location=$(workspaces.storage.path)/user-truststore.jks
           - -B
           - 'clean'
           - 'test'
@@ -113,6 +97,8 @@ spec:
         workspace: maven-settings
       - name: source
         workspace: shared-workspace
+      - name: truststore
+        workspace: truststore        
   - name: build-java-app
     taskRef:
       name: maven

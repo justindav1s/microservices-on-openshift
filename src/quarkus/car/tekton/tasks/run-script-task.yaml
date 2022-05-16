@@ -6,6 +6,8 @@ spec:
   workspaces:
   - name: storage
     readOnly: false
+  - name: truststore
+    readOnly: false    
   params:
   - name: script
   steps:
