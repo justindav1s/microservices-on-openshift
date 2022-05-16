@@ -73,6 +73,7 @@ spec:
         chmod -R 777 $(workspaces.storage.path)
         ls -ltr $(workspaces.storage.path)
         ls -ltr $(workspaces.truststore.path)
+        find /workspace -name "*.jks"
     runAfter:
       - fetch-repository
   - name: test-java-app
@@ -88,7 +89,7 @@ spec:
         value:
           - -U 
           - -q
-          - -Dkafka.ssl.truststore.location=$(workspaces.storage.path)/user-truststore.jks
+          - -Dkafka.ssl.truststore.location=/workspace/truststore/user-truststore.jks
           - -B
           - 'clean'
           - 'test'
@@ -97,8 +98,6 @@ spec:
         workspace: maven-settings
       - name: source
         workspace: shared-workspace
-      - name: truststore
-        workspace: truststore        
   - name: build-java-app
     taskRef:
       name: maven
