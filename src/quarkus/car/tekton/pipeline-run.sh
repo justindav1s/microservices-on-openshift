@@ -5,7 +5,7 @@ PROJECT=connected
 APP=car
 PROFILE=dev
 
-oc delete configmap ${APP}-${PROFILE}-config
+oc delete configmap ${APP}-${PROFILE}-config ${APP}-${PROFILE}-user-truststore
 
 oc create configmap ${APP}-${PROFILE}-config \
     --from-file=../src/main/resources/config.${PROFILE}.properties \
