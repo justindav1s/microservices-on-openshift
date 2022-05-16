@@ -2,15 +2,24 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <!-- <parent>
-        <groupId>org.acme</groupId>
-        <artifactId>kafka-quickstart</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath />
-    </parent> -->
+
     <groupId>org.jnd.car</groupId>
     <artifactId>car</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
+ 	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>http://nexus-sonatype-nexus-service.cicd.svc:8081/repository/maven-release</url>
+		</repository>
+	</distributionManagement>
+
     <properties>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
