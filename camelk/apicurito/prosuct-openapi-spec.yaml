@@ -1,0 +1,201 @@
+openapi: 3.0.2
+info:
+    title: Product API
+    version: '1.0'
+    description: Product Information
+servers:
+    -
+        url: 'https://inventory-tekton-test.apps.sno.openshiftlabs.net'
+        description: Generated server url
+paths:
+    '/products/create/{productName}/{productType}/{productPrice}':
+        post:
+            tags:
+                - product-controller
+            parameters:
+                -
+                    name: productName
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: productType
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: productPrice
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                    description: OK
+            operationId: create
+    '/products/{productId}':
+        get:
+            tags:
+                - product-controller
+            parameters:
+                -
+                    name: productId
+                    schema:
+                        format: int32
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Product'
+                    description: OK
+            operationId: get
+    /products/types:
+        get:
+            tags:
+                - product-controller
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                    description: OK
+            operationId: getTypes
+    '/products/type/{type}':
+        get:
+            tags:
+                - product-controller
+            parameters:
+                -
+                    name: type
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Product'
+                    description: OK
+            operationId: getProductsOfType
+    /products/all:
+        get:
+            tags:
+                - product-controller
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                    description: OK
+            operationId: getAll
+    '/product/test/echo/{echoStr}':
+        get:
+            tags:
+                - test-controller
+            parameters:
+                -
+                    name: echoStr
+                    schema:
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                    description: OK
+            operationId: echo
+    /health:
+        get:
+            tags:
+                - product-application
+            responses:
+                '200':
+                    content:
+                        '*/*':
+                            schema:
+                                type: string
+                    description: OK
+            operationId: ping
+    /config/p1:
+        get:
+            tags:
+                - config-controller
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                additionalProperties:
+                                    type: object
+                    description: OK
+            operationId: config
+    /:
+        get:
+            tags:
+                - product-application
+            responses:
+                '200':
+                    content:
+                        '*/*':
+                            schema:
+                                type: string
+                    description: OK
+            operationId: home
+components:
+    schemas:
+        Product:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                type:
+                    enum:
+                        - food
+                        - gadgets
+                        - clothes
+                    type: string
+                price:
+                    format: float
+                    type: number
+                basketIndex:
+                    format: int32
+                    type: integer
+        Response:
+            type: object
+            properties:
+                principal:
+                    type: string
+                date:
+                    type: string
+                message:
+                    type: string
+                echoing:
+                    type: string

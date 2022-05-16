@@ -1,0 +1,367 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  annotations:
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.1.56"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.1.56"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/build.name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1
+    openshift.io/scc: privileged
+  resourceVersion: '49302281'
+  name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1-build
+  uid: 2c4662e7-746e-4225-b120-ee81f61aa4aa
+  creationTimestamp: '2022-05-12T09:28:52Z'
+  namespace: camelk
+  ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      kind: Build
+      name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1
+      uid: b8b4905e-1cef-42e6-9a8c-63de16981f96
+      controller: true
+  labels:
+    openshift.io/build.name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1
+spec:
+  nodeSelector:
+    kubernetes.io/os: linux
+  restartPolicy: Never
+  activeDeadlineSeconds: 604800
+  initContainers:
+    - resources: {}
+      stdin: true
+      terminationMessagePath: /dev/termination-log
+      stdinOnce: true
+      name: git-clone
+      env:
+        - name: BUILD
+          value: >
+            {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"camel-k-kit-c9ud3dqpisi3b88lcrvg-1","namespace":"camelk","uid":"b8b4905e-1cef-42e6-9a8c-63de16981f96","resourceVersion":"49300446","generation":1,"creationTimestamp":"2022-05-12T09:28:52Z","labels":{"buildconfig":"camel-k-kit-c9ud3dqpisi3b88lcrvg","camel.apache.org/created.by.kind":"Integration","camel.apache.org/created.by.name":"hello-camel-k","camel.apache.org/created.by.namespace":"camelk","camel.apache.org/created.by.version":"49281694","openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","uid":"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2022-05-12T09:28:52Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:buildconfig":{},"f:camel.apache.org/created.by.kind":{},"f:camel.apache.org/created.by.name":{},"f:camel.apache.org/created.by.namespace":{},"f:camel.apache.org/created.by.version":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:binary":{},"f:type":{}},"f:strategy":{"f:dockerStrategy":{},"f:type":{}}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Binary","binary":{}},"strategy":{"type":"Docker","dockerStrategy":{"pullSecret":{"name":"builder-dockercfg-s7sfr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700"},"pushSecret":{"name":"builder-dockercfg-s7sfr"}},"resources":{},"postCommit":{},"nodeSelector":null},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700","config":{"kind":"BuildConfig","namespace":"camelk","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2022-05-12T09:28:51Z","lastTransitionTime":"2022-05-12T09:28:51Z"}]}}
+        - name: LANG
+          value: C.utf8
+        - name: BUILD_REGISTRIES_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.conf
+        - name: BUILD_REGISTRIES_DIR_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.d
+        - name: BUILD_SIGNATURE_POLICY_PATH
+          value: /var/run/configs/openshift.io/build-system/policy.json
+        - name: BUILD_STORAGE_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/storage.conf
+        - name: BUILD_BLOBCACHE_DIR
+          value: /var/cache/blobs
+        - name: HTTP_PROXY
+        - name: HTTPS_PROXY
+        - name: NO_PROXY
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: buildworkdir
+          mountPath: /tmp/build
+        - name: build-system-configs
+          readOnly: true
+          mountPath: /var/run/configs/openshift.io/build-system
+        - name: build-ca-bundles
+          mountPath: /var/run/configs/openshift.io/certs
+        - name: build-proxy-ca-bundles
+          mountPath: /var/run/configs/openshift.io/pki
+        - name: build-blob-cache
+          mountPath: /var/cache/blobs
+        - name: kube-api-access-ptdf8
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: FallbackToLogsOnError
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      args:
+        - openshift-git-clone
+        - '--v=0'
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: manage-dockerfile
+      env:
+        - name: BUILD
+          value: >
+            {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"camel-k-kit-c9ud3dqpisi3b88lcrvg-1","namespace":"camelk","uid":"b8b4905e-1cef-42e6-9a8c-63de16981f96","resourceVersion":"49300446","generation":1,"creationTimestamp":"2022-05-12T09:28:52Z","labels":{"buildconfig":"camel-k-kit-c9ud3dqpisi3b88lcrvg","camel.apache.org/created.by.kind":"Integration","camel.apache.org/created.by.name":"hello-camel-k","camel.apache.org/created.by.namespace":"camelk","camel.apache.org/created.by.version":"49281694","openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","uid":"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2022-05-12T09:28:52Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:buildconfig":{},"f:camel.apache.org/created.by.kind":{},"f:camel.apache.org/created.by.name":{},"f:camel.apache.org/created.by.namespace":{},"f:camel.apache.org/created.by.version":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:binary":{},"f:type":{}},"f:strategy":{"f:dockerStrategy":{},"f:type":{}}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Binary","binary":{}},"strategy":{"type":"Docker","dockerStrategy":{"pullSecret":{"name":"builder-dockercfg-s7sfr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700"},"pushSecret":{"name":"builder-dockercfg-s7sfr"}},"resources":{},"postCommit":{},"nodeSelector":null},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700","config":{"kind":"BuildConfig","namespace":"camelk","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2022-05-12T09:28:51Z","lastTransitionTime":"2022-05-12T09:28:51Z"}]}}
+        - name: LANG
+          value: C.utf8
+        - name: BUILD_REGISTRIES_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.conf
+        - name: BUILD_REGISTRIES_DIR_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.d
+        - name: BUILD_SIGNATURE_POLICY_PATH
+          value: /var/run/configs/openshift.io/build-system/policy.json
+        - name: BUILD_STORAGE_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/storage.conf
+        - name: BUILD_BLOBCACHE_DIR
+          value: /var/cache/blobs
+        - name: HTTP_PROXY
+        - name: HTTPS_PROXY
+        - name: NO_PROXY
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: buildworkdir
+          mountPath: /tmp/build
+        - name: build-system-configs
+          readOnly: true
+          mountPath: /var/run/configs/openshift.io/build-system
+        - name: build-ca-bundles
+          mountPath: /var/run/configs/openshift.io/certs
+        - name: build-proxy-ca-bundles
+          mountPath: /var/run/configs/openshift.io/pki
+        - name: build-blob-cache
+          mountPath: /var/cache/blobs
+        - name: kube-api-access-ptdf8
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: FallbackToLogsOnError
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      args:
+        - openshift-manage-dockerfile
+        - '--v=0'
+  serviceAccountName: builder
+  imagePullSecrets:
+    - name: builder-dockercfg-s7sfr
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  preemptionPolicy: PreemptLowerPriority
+  nodeName: threadripper1
+  securityContext: {}
+  containers:
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: docker-build
+      env:
+        - name: BUILD
+          value: >
+            {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"camel-k-kit-c9ud3dqpisi3b88lcrvg-1","namespace":"camelk","uid":"b8b4905e-1cef-42e6-9a8c-63de16981f96","resourceVersion":"49300446","generation":1,"creationTimestamp":"2022-05-12T09:28:52Z","labels":{"buildconfig":"camel-k-kit-c9ud3dqpisi3b88lcrvg","camel.apache.org/created.by.kind":"Integration","camel.apache.org/created.by.name":"hello-camel-k","camel.apache.org/created.by.namespace":"camelk","camel.apache.org/created.by.version":"49281694","openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg","uid":"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6","controller":true}],"managedFields":[{"manager":"Go-http-client","operation":"Update","apiVersion":"build.openshift.io/v1","time":"2022-05-12T09:28:52Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.number":{}},"f:labels":{".":{},"f:buildconfig":{},"f:camel.apache.org/created.by.kind":{},"f:camel.apache.org/created.by.name":{},"f:camel.apache.org/created.by.namespace":{},"f:camel.apache.org/created.by.version":{},"f:openshift.io/build-config.name":{},"f:openshift.io/build.start-policy":{}},"f:ownerReferences":{".":{},"k:{\"uid\":\"7ff69bc7-d8a4-4d91-8a4a-f1dcf395cbd6\"}":{}}},"f:spec":{"f:output":{"f:to":{}},"f:serviceAccount":{},"f:source":{"f:binary":{},"f:type":{}},"f:strategy":{"f:dockerStrategy":{},"f:type":{}}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"New\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:status":{},"f:type":{}}},"f:config":{},"f:phase":{}}}}]},"spec":{"serviceAccount":"builder","source":{"type":"Binary","binary":{}},"strategy":{"type":"Docker","dockerStrategy":{"pullSecret":{"name":"builder-dockercfg-s7sfr"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700"},"pushSecret":{"name":"builder-dockercfg-s7sfr"}},"resources":{},"postCommit":{},"nodeSelector":null},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/camelk/camel-k-kit-c9ud3dqpisi3b88lcrvg:49281700","config":{"kind":"BuildConfig","namespace":"camelk","name":"camel-k-kit-c9ud3dqpisi3b88lcrvg"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2022-05-12T09:28:51Z","lastTransitionTime":"2022-05-12T09:28:51Z"}]}}
+        - name: LANG
+          value: C.utf8
+        - name: PUSH_DOCKERCFG_PATH
+          value: /var/run/secrets/openshift.io/push
+        - name: PULL_DOCKERCFG_PATH
+          value: /var/run/secrets/openshift.io/pull
+        - name: BUILD_REGISTRIES_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.conf
+        - name: BUILD_REGISTRIES_DIR_PATH
+          value: /var/run/configs/openshift.io/build-system/registries.d
+        - name: BUILD_SIGNATURE_POLICY_PATH
+          value: /var/run/configs/openshift.io/build-system/policy.json
+        - name: BUILD_STORAGE_CONF_PATH
+          value: /var/run/configs/openshift.io/build-system/storage.conf
+        - name: BUILD_STORAGE_DRIVER
+          value: overlay
+        - name: BUILD_BLOBCACHE_DIR
+          value: /var/cache/blobs
+        - name: HTTP_PROXY
+        - name: HTTPS_PROXY
+        - name: NO_PROXY
+      securityContext:
+        privileged: true
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: node-pullsecrets
+          mountPath: /var/lib/kubelet/config.json
+        - name: buildworkdir
+          mountPath: /tmp/build
+        - name: buildcachedir
+          mountPath: /var/lib/containers/cache
+        - name: builder-dockercfg-s7sfr-push
+          readOnly: true
+          mountPath: /var/run/secrets/openshift.io/push
+        - name: builder-dockercfg-s7sfr-pull
+          readOnly: true
+          mountPath: /var/run/secrets/openshift.io/pull
+        - name: build-system-configs
+          readOnly: true
+          mountPath: /var/run/configs/openshift.io/build-system
+        - name: build-ca-bundles
+          mountPath: /var/run/configs/openshift.io/certs
+        - name: build-proxy-ca-bundles
+          mountPath: /var/run/configs/openshift.io/pki
+        - name: container-storage-root
+          mountPath: /var/lib/containers/storage
+        - name: build-blob-cache
+          mountPath: /var/cache/blobs
+        - name: kube-api-access-ptdf8
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: FallbackToLogsOnError
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      args:
+        - openshift-docker-build
+        - '--v=0'
+  serviceAccount: builder
+  volumes:
+    - name: buildcachedir
+      hostPath:
+        path: /var/lib/containers/cache
+        type: ''
+    - name: buildworkdir
+      emptyDir: {}
+    - name: node-pullsecrets
+      hostPath:
+        path: /var/lib/kubelet/config.json
+        type: File
+    - name: builder-dockercfg-s7sfr-push
+      secret:
+        secretName: builder-dockercfg-s7sfr
+        defaultMode: 384
+    - name: builder-dockercfg-s7sfr-pull
+      secret:
+        secretName: builder-dockercfg-s7sfr
+        defaultMode: 384
+    - name: build-system-configs
+      configMap:
+        name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1-sys-config
+        defaultMode: 420
+    - name: build-ca-bundles
+      configMap:
+        name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1-ca
+        items:
+          - key: service-ca.crt
+            path: 'certs.d/image-registry.openshift-image-registry.svc:5000/ca.crt'
+        defaultMode: 420
+    - name: build-proxy-ca-bundles
+      configMap:
+        name: camel-k-kit-c9ud3dqpisi3b88lcrvg-1-global-ca
+        items:
+          - key: ca-bundle.crt
+            path: tls-ca-bundle.pem
+        defaultMode: 420
+    - name: container-storage-root
+      emptyDir: {}
+    - name: build-blob-cache
+      emptyDir: {}
+    - name: kube-api-access-ptdf8
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  containerStatuses:
+    - restartCount: 0
+      started: false
+      ready: false
+      name: docker-build
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2022-05-12T09:28:58Z'
+          finishedAt: '2022-05-12T09:29:33Z'
+          containerID: >-
+            cri-o://e730abd6e5a0d3db6321bf59344dfba56801bf15e642dae972e67c8cf9be61e6
+      imageID: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      lastState: {}
+      containerID: 'cri-o://e730abd6e5a0d3db6321bf59344dfba56801bf15e642dae972e67c8cf9be61e6'
+  qosClass: BestEffort
+  podIPs:
+    - ip: 10.128.1.56
+  podIP: 10.128.1.56
+  hostIP: 192.168.10.12
+  startTime: '2022-05-12T09:28:52Z'
+  initContainerStatuses:
+    - name: git-clone
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2022-05-12T09:28:54Z'
+          finishedAt: '2022-05-12T09:28:55Z'
+          containerID: >-
+            cri-o://a5cfebc5c0d7a89bd316613fe1ccfaca623411bad1d22ad6ff92f1c3663c56b7
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      imageID: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      containerID: 'cri-o://a5cfebc5c0d7a89bd316613fe1ccfaca623411bad1d22ad6ff92f1c3663c56b7'
+    - name: manage-dockerfile
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2022-05-12T09:28:57Z'
+          finishedAt: '2022-05-12T09:28:57Z'
+          containerID: >-
+            cri-o://ad996ecf1a66447a6421fbc47348f2f4b68dd7333c2e90c46b3931fb436a66f4
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      imageID: >-
+        quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:6105b9d0b950a0c8284f6e866133b3592add721fdc059fa5af5f96da8beff585
+      containerID: 'cri-o://ad996ecf1a66447a6421fbc47348f2f4b68dd7333c2e90c46b3931fb436a66f4'
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-05-12T09:28:57Z'
+      reason: PodCompleted
+    - type: Ready
+      status: 'False'
+      lastProbeTime: null
+      lastTransitionTime: '2022-05-12T09:29:34Z'
+      reason: PodCompleted
+    - type: ContainersReady
+      status: 'False'
+      lastProbeTime: null
+      lastTransitionTime: '2022-05-12T09:29:34Z'
+      reason: PodCompleted
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-05-12T09:28:52Z'
+  phase: Succeeded

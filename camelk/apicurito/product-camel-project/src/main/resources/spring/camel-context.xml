@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext id="context1" xmlns="http://camel.apache.org/schema/spring">
+
+        <onException>
+            <exception>java.lang.Exception</exception>
+            <handled><constant>true</constant></handled>
+            <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+                <constant>500</constant>
+            </setHeader>
+            <setBody>
+                <simple>${exception.message}</simple>
+            </setBody>
+        </onException>
+
+        <restConfiguration component="servlet" apiContextPath="/openapi.json"/>
+
+        <rest id="rest1" path="/" enableCORS="true">
+            <get id="openapi.json" produces="application/json" uri="openapi.json">
+                <description>Gets the openapi document for this service</description>
+                <route id="rest1-route1">
+                    <setHeader id="setHeader-route1" headerName="Exchange.CONTENT_TYPE">
+                        <constant>application/vnd.oai.openapi+json</constant>
+                    </setHeader>
+                    <setBody id="setBody-route1">
+                        <simple>resource:classpath:openapi.json</simple>
+                    </setBody>
+                </route>
+            </get>
+        </rest>
+
+        <rest id="rest2" path="" bindingMode="json" enableCORS="true">
+            <post id="create" uri="/products/create/{productName}/{productType}/{productPrice}">
+                <param name="productName" required="true" type="path"/>
+                <param name="productType" required="true" type="path"/>
+                <param name="productPrice" required="true" type="path"/>
+                <to uri="direct:create"/>
+            </post>
+            <get id="get" uri="/products/{productId}">
+                <param name="productId" required="true" type="path"/>
+                <to uri="direct:get"/>
+            </get>
+            <get id="getTypes" uri="/products/types">
+                <to uri="direct:getTypes"/>
+            </get>
+            <get id="getProductsOfType" uri="/products/type/{type}">
+                <param name="type" required="true" type="path"/>
+                <to uri="direct:getProductsOfType"/>
+            </get>
+            <get id="getAll" uri="/products/all">
+                <to uri="direct:getAll"/>
+            </get>
+            <get id="echo" uri="/product/test/echo/{echoStr}">
+                <param name="echoStr" required="true" type="path"/>
+                <to uri="direct:echo"/>
+            </get>
+            <get id="ping" uri="/health">
+                <to uri="direct:ping"/>
+            </get>
+            <get id="config" uri="/config/p1">
+                <to uri="direct:config"/>
+            </get>
+            <get id="home" uri="/">
+                <to uri="direct:home"/>
+            </get>
+        </rest>
+
+        <route id="route-2d9bfb42-e2d3-4b67-bd84-a2e3c1dc4951">
+            <from id="from-a215cd26-04bf-4844-90a7-fd020ec239e9" uri="direct:create"/>
+            <to id="to-b11edb9f-ed58-48f4-838c-259980783192" uri="direct:501"/>
+        </route>
+        <route id="route-e53cf239-48a1-4985-b213-d6c51ed5c236">
+            <from id="from-d23b1bb7-221e-4bdf-adb5-999ba84c2075" uri="direct:get"/>
+            <to id="to-49aaeb23-5245-4110-b4f9-db540a21e664" uri="direct:501"/>
+        </route>
+        <route id="route-d97a9b46-f331-4a63-97c0-41e508e7134e">
+            <from id="from-b92d474f-7eab-47e3-b1c5-9e4fdaf62f52" uri="direct:getTypes"/>
+            <to id="to-ba2a7975-abc5-4eb3-b277-81b73ae7e601" uri="direct:501"/>
+        </route>
+        <route id="route-0a4f1ee4-f4fe-4342-8aed-c013255668dd">
+            <from id="from-fdc61c56-3c60-424c-9110-749221d8d3e5" uri="direct:getProductsOfType"/>
+            <to id="to-fa80aaae-1164-4044-bf9d-9127b9e55ce2" uri="direct:501"/>
+        </route>
+        <route id="route-c7187ba9-75d1-453a-973c-d434df036c97">
+            <from id="from-cce30a09-b353-4cad-9fe1-58738c2bf911" uri="direct:getAll"/>
+            <to id="to-0a77b0a0-ad07-497a-8067-3b41ffdbeab3" uri="direct:501"/>
+        </route>
+        <route id="route-e3b1015f-e1c3-403c-94c7-5b9d204f43ab">
+            <from id="from-6e0d21f3-635e-4d59-a113-fa75f8843501" uri="direct:echo"/>
+            <to id="to-6a699b1f-0842-44ae-8df0-5d48efe293de" uri="direct:501"/>
+        </route>
+        <route id="route-5befdfe4-23d7-46ae-b68b-49d3faba6faa">
+            <from id="from-717246e9-2f05-4899-9417-93563fe962bd" uri="direct:ping"/>
+            <to id="to-382f050d-e672-4b91-ad8b-de64b2667d6b" uri="direct:501"/>
+        </route>
+        <route id="route-e9a44609-621b-42c8-a85b-c5b0f55f3f7f">
+            <from id="from-3e7d3945-e6c2-415b-991c-9b96cd0a3799" uri="direct:config"/>
+            <to id="to-56bec885-b2eb-4df9-b74b-f83986988ee1" uri="direct:501"/>
+        </route>
+        <route id="route-a97b0a91-f9e3-475f-b018-0dc1ce4b9c5e">
+            <from id="from-b6e9bd03-0762-40d6-b70b-a9987d8880fa" uri="direct:home"/>
+            <to id="to-1f165af3-4eec-4f2e-bafd-d3cfa9dbe293" uri="direct:501"/>
+        </route>
+
+        <route id="route2">
+            <from id="from-route2" uri="direct:501"/>
+            <log id="log-route2" message="API operation not yet implemented: ${headers.CamelHttpMethod} ${headers.CamelHttpPath}"/>
+            <setHeader id="setHeader-route2" headerName="Exchange.HTTP_RESPONSE_CODE">
+                <constant>501</constant>
+            </setHeader>
+            <setBody id="setBody-route2">
+                <simple>API operation not implemented: ${headers.CamelHttpMethod} ${headers.CamelHttpPath}</simple>
+            </setBody>
+        </route>
+
+    </camelContext>
+</beans>
