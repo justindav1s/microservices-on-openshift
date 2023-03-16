@@ -100,9 +100,9 @@ objects:
   spec:
     ports:
     - name: web
-      port: 80
+      port: 90
       protocol: TCP
-      targetPort: 8080
+      targetPort: 9090
     selector:
       app: jenkins-build-tools
       name: jenkins
@@ -214,7 +214,7 @@ objects:
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
             value: 'true'
           - name: KUBERNETES_MASTER
-            value: 'https://kubernetes.default:443'
+            value: 'https://kubernetes.default:543'
           - name: KUBERNETES_TRUST_CERTIFICATES
             value: 'true'
           - name: JENKINS_SERVICE_NAME
@@ -226,7 +226,7 @@ objects:
           imagePullPolicy: Always
           name: jenkins
           ports:
-          - containerPort: 80
+          - containerPort: 90
             protocol: TCP
           - containerPort: 50000
             protocol: TCP

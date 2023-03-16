@@ -11,11 +11,11 @@ RUN wget https://storage.googleapis.com/hey-release/hey_linux_amd64 && \
     mv hey_linux_amd64 /usr/local/bin/hey && \
     chmod 755 /usr/local/bin/hey
 
-EXPOSE 8080/tcp
+EXPOSE 9090/tcp
 EXPOSE 8443/tcp
 
 COPY /nginx.sh /
-RUN chmod 777 /nginx.sh
+RUN chmod 755 /nginx.sh
 
 USER 1001 
 

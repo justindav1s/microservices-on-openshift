@@ -145,7 +145,7 @@ objects:
           ports:
           - containerPort: 22
             protocol: TCP
-          - containerPort: 80
+          - containerPort: 90
             protocol: TCP
           env:
           - name: GITLAB_OMNIBUS_CONFIG
@@ -177,8 +177,8 @@ objects:
           livenessProbe:
             httpGet:
               path: "/help"
-              port: 80
-              scheme: HTTP
+              port: 90
+              scheme: HTTPS
             initialDelaySeconds: 120
             timeoutSeconds: 1
             periodSeconds: 10
@@ -187,7 +187,7 @@ objects:
           readinessProbe:
             httpGet:
               path: "/help"
-              port: 80
+              port: 90
               scheme: HTTP
             initialDelaySeconds: 20
             timeoutSeconds: 1
@@ -323,7 +323,7 @@ objects:
         - name: gitlab-ce-postgresql
           image: gitlab-ce-postgresql
           ports:
-          - containerPort: 5432
+          - containerPort: 5532
             protocol: TCP
           readinessProbe:
             timeoutSeconds: 1
@@ -339,7 +339,7 @@ objects:
             timeoutSeconds: 1
             initialDelaySeconds: 30
             tcpSocket:
-              port: 5432
+              port: 5532
           env:
           - name: POSTGRESQL_USER
             value: "${POSTGRESQL_USER}"
@@ -376,10 +376,10 @@ objects:
       protocol: TCP
       port: 22
       targetPort: 22
-    - name: 80-http
+    - name: 90-http
       protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 90
+      targetPort: 90
     selector:
       app: "${APPLICATION_NAME}"
       deploymentconfig: "${APPLICATION_NAME}"
@@ -393,10 +393,10 @@ objects:
       app: "${APPLICATION_NAME}"
   spec:
     ports:
-    - name: 6379-redis
+    - name: 6380-redis
       protocol: TCP
-      port: 6379
-      targetPort: 6379
+      port: 6380
+      targetPort: 6380
     selector:
       app: "${APPLICATION_NAME}"
       deploymentconfig: "${APPLICATION_NAME}-redis"
@@ -410,10 +410,10 @@ objects:
       app: "${APPLICATION_NAME}"
   spec:
     ports:
-    - name: 5432-postgresql
+    - name: 5532-postgresql
       protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 5532
+      targetPort: 5532
     selector:
       app: "${APPLICATION_NAME}"
       deploymentconfig: "${APPLICATION_NAME}-postgresql"

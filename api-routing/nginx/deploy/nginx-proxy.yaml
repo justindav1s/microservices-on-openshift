@@ -10,10 +10,10 @@ items:
     name: nginx-proxy
   spec:
     ports:
-    - name: 8080-tcp
-      port: 8080
+    - name: 9090-tcp
+      port: 9090
       protocol: TCP
-      targetPort: 8080
+      targetPort: 9090
     - name: 8443-tcp
       port: 8443
       protocol: TCP
@@ -32,7 +32,7 @@ items:
     name: nginx-proxy
   spec:
     port:
-      targetPort: 8080-tcp
+      targetPort: 9090-tcp
     to:
       kind: Service
       name: nginx-proxy
@@ -74,7 +74,7 @@ items:
           imagePullPolicy: Always
           name: nginx-proxy
           ports:
-          - containerPort: 8080
+          - containerPort: 9090
             protocol: TCP
           - containerPort: 8443
             protocol: TCP

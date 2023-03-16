@@ -33,7 +33,7 @@ items:
           imagePullPolicy: Always
           name: nginx
           ports:
-          - containerPort: 8080
+          - containerPort: 9090
             protocol: TCP
           - containerPort: 8443
             protocol: TCP
@@ -65,14 +65,14 @@ items:
     name: nginx
   spec:
     ports:
-    - name: 8080-tcp
-      port: 8080
+    - name: 9090-tcp
+      port: 9090
       protocol: TCP
-      targetPort: 80
+      targetPort: 90
     - name: 8443-tcp
       port: 8443
       protocol: TCP
-      targetPort: 443
+      targetPort: 543
     selector:
       app: nginx
       deploymentconfig: nginx
@@ -87,7 +87,7 @@ items:
     name: nginx
   spec:
     port:
-      targetPort: 8080-tcp
+      targetPort: 9090-tcp
     to:
       kind: Service
       name: nginx
@@ -96,7 +96,7 @@ items:
 
 - apiVersion: v1
   data:
-    default.conf: "server {\n    listen       80;\n    server_name  localhost;\n\n    #charset
+    default.conf: "server {\n    listen       90;\n    server_name  localhost;\n\n    #charset
       koi8-r;\n    #access_log  /var/log/nginx/host.access.log  main;\n\n    location
       /httpbin/ {\n        proxy_pass http://httpbin.org/;\n        proxy_redirect https://httpbin.org/
       http://nginx-reverse-proxy.apps.ocp4.datr.eu/httpbin/;\n        proxy_set_header
